@@ -100,6 +100,13 @@ button.addEventListener(`click`, (e) => {
   const email = document.getElementById(`email`).value;
   const img = document.getElementById(`img`).value;
 
+  //aggiungo la condizione che non permette la creazione di slot vuoti
+
+  generatecard();
+
+  if (name === `` || role === `` || email === ``) {
+    return;
+  }
 
   const newmember = {
     name, role, email, img
@@ -107,8 +114,14 @@ button.addEventListener(`click`, (e) => {
 
   teamMembers.push(newmember)
   //se richiamo la funzione senza svuotarla mi crea i ''doppioni'' degli elementi generati in precedenza, quindi svuoto l'html assegnandogli un valore vuoto per poi successivamente ''inniettargli'' la funzione
-  generatecard();
+
+  //svuoto successivamente i campi
+  document.getElementById(`name`).value = ``;
+  document.getElementById(`role`).value = ``;
+  document.getElementById(`email`).value = ``;
+  document.getElementById(`img`).value = ``;
+
+
 });
 
 generatecard();
-
