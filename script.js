@@ -53,9 +53,9 @@ function generatecardteam(descrition) {
                 </div>
                 <div class="col-md-8 bg-black">
                   <div class="card-body  text-white ">
-                  <h5 class="card-title" id="name">${descrition.name}</h5>
-                  <p class="card-text" id="role">${descrition.role}</p>
-                  <a class="card-text" id="email">${descrition.email}</a>
+                  <h5 class="card-title" >${descrition.name}</h5>
+                  <p class="card-text" >${descrition.role}</p>
+                  <a class="card-text" >${descrition.email}</a>
                   </div>
                   </div>
                   </div>
@@ -65,11 +65,50 @@ function generatecardteam(descrition) {
 }
 
 //Ciclo ogni elemento presente nell'array di oggetti per inserirlo all'interno dell'html tramite il collegamento prima richiamato
-for (let i = 0; i < teamMembers.length; i++) {
-  let member = generatecardteam(teamMembers[i]);
 
-  memberTeam.innerHTML += member
+
+//trasformo in una funzione che mi permette di essere richiamata alla creazione della pagina e una volta cliccato il bottone 
+function generatecard() {
+  for (let i = 0; i < teamMembers.length; i++) {
+
+    let member = generatecardteam(teamMembers[i]);
+
+    memberTeam.innerHTML += member
+  }
 }
 
+//creo la funzione che mi permette di inserire un nuovo elemento all'html quando inserisco i dati all'interno della form 
 
+//recupero l'elemento che mi scatena l'azione in questo caso il bottone
+
+const button = document.getElementById(`confirm`);
+
+//genero l'evento che deve generare la creazione di una nuova card
+
+button.addEventListener(`click`, (e) => {
+  e.preventDefault(); //prevengo la rigenerazione della pagina eliminando il comportamento di default del bottone
+  //recupero i valori gli elementi dall'html
+
+
+
+  //per ovviare al problema di duplicare tutto nuovamente svuoto prima di tutto quello che c'è nell'html per poi successivamente rimetterlo dentro
+
+  memberTeam.innerHTML = ``;
+
+  const name = document.getElementById(`name`).value;
+  const role = document.getElementById(`role`).value;
+  const email = document.getElementById(`email`).value;
+  const img = document.getElementById(`img`).value;
+
+
+  const newmember = {
+    name, role, email, img
+  }
+
+  teamMembers.push(newmember)
+  //se richiamo la funzione senza svuotarla mi crea i ''doppioni'' degli elementi generati in precedenza, quindi svuoto l'html assegnandogli un valore vuoto per poi successivamente ''inniettargli'' la funzione
+  generatecard();
+});
+
+generatecard();
 
